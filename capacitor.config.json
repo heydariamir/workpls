@@ -1,0 +1,10 @@
+{
+  "appId": "com.feqhbook.app",
+  "appName": "feqh-book",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}
