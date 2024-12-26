@@ -3,239 +3,78 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Scheduler</title>
-		<link rel="stylesheet" href="./styles.css" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-			integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
-		
+		<title>کتاب فقه انتظامی</title>
+		<link rel="stylesheet" href="./assets/fontawesome/css/all.min.css" />
+		<link rel="stylesheet" href="./assets/css/main.css" />
 	</head>
 	<body>
-		<div class="modal">
-			<div class="modal__wrapper">
-				<h2 class="modal__title"></h2>
-				<p class="modal__message"></p>
-				<button class="btn modal__confirm">OK</button>
-			</div>
+		<div class="home">
+			<a href="#" class="home-icon">
+				<i class="fas fa-home"></i>
+			</a>
 		</div>
-		<template id="add-todo">
-			<div class="schedule-create__list" data-todo-number="1">
-				<h3 class="schedule-create__label">
-					Todo
-					<span class="todo-number">1</span>
-					<small class="text-warning">Required*</small>
-				</h3>
-				<div class="schedule-create__control-wrapper">
-					<textarea
-						name="todo"
-						rows="10"
-						placeholder="Todo"
-						class="schedule-create__input"
-					></textarea>
-					<div class="schedule-create__date-input-wrapper">
-						<div class="schedule-create__date-input">
-							<h4 class="schedule-create__date-title">
-								Starting Date
-								<small class="text-warning">Required*</small>
-							</h4>
-							<input
-								name="start-date"
-								type="date"
-								class="schedule-create__input"
-								required=""
-							/>
-						</div>
-						<div class="schedule-create__date-input">
-							<h4 class="schedule-create__date-title">
-								Ending Date
-							</h4>
-							<input
-								name="end-date"
-								type="date"
-								class="schedule-create__input"
-							/>
-						</div>
+		<div class="sidebar-wrapper">
+			<input type="checkbox" id="btn" hidden />
+			<label for="btn" class="menu-btn">
+				<i class="fas fa-bars"></i>
+				<i class="fas fa-times"></i>
+			</label>
+			<nav id="sidebar">
+				<div class="sidebar-title">منو</div>
+				<ul class="list-items">
+					<li>
+						<a href="#"><i class="fas fa-home"></i>خانه</a>
+					</li>
+					<li>
+						<a href="#"><i class="fas fa-search"></i>جستجو</a>
+					</li>
+					<li>
+						<a href="#"><i class="fas fa-cog"></i>تنظیمات</a>
+					</li>
+					<li>
+						<a href="#"><i class="fas fa-user"></i>درباره ی ما</a>
+					</li>
+					<div class="icons">
+						<a href="#"><i class="fas fa-message"></i></a>
+						<a href="#"><i class="fas fa-phone"></i></a>
+						<a href="#"><i class="fas fa-link"></i></a>
 					</div>
-					<button type="button" class="btn btn--remove">
-						Remove Todo
-					</button>
-				</div>
-			</div>
-		</template>
-		<template id="ongoing-todo">
-			<div class="schedule-list__wrapper">
-				<h3 class="schedule-list__title"></h3>
-			</div>
-		</template>
-		<template id="ongoing-todo-list">
-			<ul class="schedule-list__todos">
-				<li class="schedule-list__todo">
-					<h4 class="schedule-list__todo-title"></h4>
-					<div class="schedule-list__todo-content">
-						<div class="schedule-list__todo-times">
-							<div class="schedule-list__todo-date">
-								<p class="schedule-list__todo-date__start">
-									Generating...
-								</p>
-								<span>-</span>
-								<p class="schedule-list__todo-date__end">
-									Generating...
-								</p>
-							</div>
-							<p
-								id="remaining-time"
-								class="schedule-list__todo-time"
-							>
-								Generating...
-							</p>
-							<p
-								id="passed-time"
-								class="schedule-list__todo-time"
-							>
-								Generating...
-							</p>
-						</div>
-						<div class="hourglass">
-							<div class="hourglass__top"></div>
-							<div class="hourglass__bottom"></div>
-						</div>
-					</div>
-				</li>
-			</ul>
-		</template>
+				</ul>
+			</nav>
+		</div>
 		<header class="main-header">
-			<h2 class="main-header__title">Welcome!</h2>
+			<div>
+				<span>کتاب فقه انتظامی</span>
+			</div>
 		</header>
-		<main>
-			<section class="schedule-list section">
-				<h2>On Going Todos</h2>
-				<div class="schedule-list__content box">
-					<!-- <span>No Configurated Schedule.</span> -->
-				</div>
-			</section>
-			<section class="schedule-create section">
-				<div>
-					<h2>Add a New Schedule</h2>
-					<form method="POST" class="schedule-create__form box">
-						<div id="schedule-create__lists">
-							<div class="schedule-create__title">
-								<h3 class="schedule-create__label">
-									Schedule Title
-									<small class="text-warning"
-										>Required*</small
-									>
-								</h3>
-								<div>
-									<input
-										name="title"
-										type="text"
-										class="schedule-create__input"
-										placeholder="Title"
-										required
-									/>
-								</div>
-							</div>
-							<div
-								class="schedule-create__list"
-								data-todo-number="1"
-							>
-								<h3 class="schedule-create__label">
-									Todo
-									<span class="todo-number">1</span>
-									<small class="text-warning"
-										>Required*</small
-									>
-								</h3>
-								<div class="schedule-create__control-wrapper">
-									<textarea
-										name="todo"
-										rows="10"
-										placeholder="Todo"
-										class="schedule-create__input"
-										required
-									></textarea>
-									<div
-										class="schedule-create__date-input-wrapper"
-									>
-										<div
-											class="schedule-create__date-input"
-										>
-											<h4
-												class="schedule-create__date-title"
-											>
-												Starting Date
-												<small class="text-warning"
-													>Required*</small
-												>
-											</h4>
-											<input
-												name="start-date"
-												type="date"
-												class="schedule-create__input"
-												required
-											/>
-										</div>
-										<div
-											class="schedule-create__date-input"
-										>
-											<h4
-												class="schedule-create__date-title"
-											>
-												Ending Date
-											</h4>
-											<input
-												name="end-date"
-												type="date"
-												class="schedule-create__input"
-											/>
-										</div>
-									</div>
-									<button
-										name="remove"
-										type="button"
-										class="btn btn--remove"
-									>
-										Remove Todo
-									</button>
-								</div>
-							</div>
+		<main class="main">
+			<section class="infobox-section">
+				<h1>موضوعات</h1>
+				<p>از میان موضوعات زیر انتخاب کنید</p>
+				<div class="infobox-container">
+					<div class="infobox" style="background-color: #e7edff">
+						<div class="icon">
+							<img
+								src="./assets/icons/icon-police-blue.svg"
+								alt="police"
+							/>
 						</div>
-						<div class="schedule-create__modify-wrapper">
-							<button
-								type="button"
-								name="add"
-								class="btn btn--add"
-							>
-								Add a New Todo
-							</button>
-							<button
-								type="submit"
-								name="submit"
-								class="btn btn--submit"
-							>
-								Submit
-							</button>
-						</div>
-					</form>
-				</div>
-			</section>
-			<section class="section">
-				<h2>Completed Todos</h2>
-				<div class="box">
-					<span>No Completed Todos.</span>
-				</div>
-			</section>
-			<section class="section">
-				<h2>Failed Todos</h2>
-				<div class="box">
-					<span>No Failed Todos.</span>
+						<h2>اصول پلیس های تخصصی</h2>
+						<p>مطالعه ی اصول تخصصی پلیس</p>
+					</div>
+					<div class="infobox" style="background-color: #fff1e7">
+						<div class="icon"><img src="assets/icons/icon-police-purple.svg" alt="police"></div>
+						<h2>اصول تخصصی موضوعی</h2>
+						<p>مطالعه ی اصول تخصصی موضوعی</p>
+					</div>
+					<div class="infobox" style="background-color: #e7ffe7">
+						<div class="icon"><img src="assets/icons/icon-police-grey.svg" alt="police"></div>
+						<h2>اصول عمومی</h2>
+						<p>مطالعه ی اصول عمومی</p>
+					</div>
 				</div>
 			</section>
 		</main>
-		<script src="./script.js" type="module"></script>
+		<script src="./assets/scripts/app.js" type="module"></script>
 	</body>
 </html>
