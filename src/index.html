@@ -1,32 +1,240 @@
-<!doctype html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Awesome Capacitor App</title>
-    <meta
-      name="viewport"
-      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-
-    <script
-      type="module"
-      src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"
-    ></script>
-
-    <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
-    <link rel="manifest" href="./manifest.json" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <meta name="theme-color" content="#31d53d" />
-  </head>
-  <body>
-    <capacitor-welcome></capacitor-welcome>
-
-    <script src="./js/capacitor-welcome.js" type="module"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Scheduler</title>
+		<link rel="stylesheet" href="./styles.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+			integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<script src="./script.js" defer></script>
+	</head>
+	<body>
+		<div class="modal">
+			<div class="modal__wrapper">
+				<h2 class="modal__title"></h2>
+				<p class="modal__message"></p>
+				<button class="btn modal__confirm">OK</button>
+			</div>
+		</div>
+		<template id="add-todo">
+			<div class="schedule-create__list" data-todo-number="1">
+				<h3 class="schedule-create__label">
+					Todo
+					<span class="todo-number">1</span>
+					<small class="text-warning">Required*</small>
+				</h3>
+				<div class="schedule-create__control-wrapper">
+					<textarea
+						name="todo"
+						rows="10"
+						placeholder="Todo"
+						class="schedule-create__input"
+					></textarea>
+					<div class="schedule-create__date-input-wrapper">
+						<div class="schedule-create__date-input">
+							<h4 class="schedule-create__date-title">
+								Starting Date
+								<small class="text-warning">Required*</small>
+							</h4>
+							<input
+								name="start-date"
+								type="date"
+								class="schedule-create__input"
+								required=""
+							/>
+						</div>
+						<div class="schedule-create__date-input">
+							<h4 class="schedule-create__date-title">
+								Ending Date
+							</h4>
+							<input
+								name="end-date"
+								type="date"
+								class="schedule-create__input"
+							/>
+						</div>
+					</div>
+					<button type="button" class="btn btn--remove">
+						Remove Todo
+					</button>
+				</div>
+			</div>
+		</template>
+		<template id="ongoing-todo">
+			<div class="schedule-list__wrapper">
+				<h3 class="schedule-list__title"></h3>
+			</div>
+		</template>
+		<template id="ongoing-todo-list">
+			<ul class="schedule-list__todos">
+				<li class="schedule-list__todo">
+					<h4 class="schedule-list__todo-title"></h4>
+					<div class="schedule-list__todo-content">
+						<div class="schedule-list__todo-times">
+							<div class="schedule-list__todo-date">
+								<p class="schedule-list__todo-date__start">
+									Generating...
+								</p>
+								<span>-</span>
+								<p class="schedule-list__todo-date__end">
+									Generating...
+								</p>
+							</div>
+							<p
+								id="remaining-time"
+								class="schedule-list__todo-time"
+							>
+								Generating...
+							</p>
+							<p
+								id="passed-time"
+								class="schedule-list__todo-time"
+							>
+								Generating...
+							</p>
+						</div>
+						<div class="hourglass">
+							<div class="hourglass__top"></div>
+							<div class="hourglass__bottom"></div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</template>
+		<header class="main-header">
+			<h2 class="main-header__title">Welcome!</h2>
+		</header>
+		<main>
+			<section class="schedule-list section">
+				<h2>On Going Todos</h2>
+				<div class="schedule-list__content box">
+					<!-- <span>No Configurated Schedule.</span> -->
+				</div>
+			</section>
+			<section class="schedule-create section">
+				<div>
+					<h2>Add a New Schedule</h2>
+					<form method="POST" class="schedule-create__form box">
+						<div id="schedule-create__lists">
+							<div class="schedule-create__title">
+								<h3 class="schedule-create__label">
+									Schedule Title
+									<small class="text-warning"
+										>Required*</small
+									>
+								</h3>
+								<div>
+									<input
+										name="title"
+										type="text"
+										class="schedule-create__input"
+										placeholder="Title"
+										required
+									/>
+								</div>
+							</div>
+							<div
+								class="schedule-create__list"
+								data-todo-number="1"
+							>
+								<h3 class="schedule-create__label">
+									Todo
+									<span class="todo-number">1</span>
+									<small class="text-warning"
+										>Required*</small
+									>
+								</h3>
+								<div class="schedule-create__control-wrapper">
+									<textarea
+										name="todo"
+										rows="10"
+										placeholder="Todo"
+										class="schedule-create__input"
+										required
+									></textarea>
+									<div
+										class="schedule-create__date-input-wrapper"
+									>
+										<div
+											class="schedule-create__date-input"
+										>
+											<h4
+												class="schedule-create__date-title"
+											>
+												Starting Date
+												<small class="text-warning"
+													>Required*</small
+												>
+											</h4>
+											<input
+												name="start-date"
+												type="date"
+												class="schedule-create__input"
+												required
+											/>
+										</div>
+										<div
+											class="schedule-create__date-input"
+										>
+											<h4
+												class="schedule-create__date-title"
+											>
+												Ending Date
+											</h4>
+											<input
+												name="end-date"
+												type="date"
+												class="schedule-create__input"
+											/>
+										</div>
+									</div>
+									<button
+										name="remove"
+										type="button"
+										class="btn btn--remove"
+									>
+										Remove Todo
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="schedule-create__modify-wrapper">
+							<button
+								type="button"
+								name="add"
+								class="btn btn--add"
+							>
+								Add a New Todo
+							</button>
+							<button
+								type="submit"
+								name="submit"
+								class="btn btn--submit"
+							>
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</section>
+			<section class="section">
+				<h2>Completed Todos</h2>
+				<div class="box">
+					<span>No Completed Todos.</span>
+				</div>
+			</section>
+			<section class="section">
+				<h2>Failed Todos</h2>
+				<div class="box">
+					<span>No Failed Todos.</span>
+				</div>
+			</section>
+		</main>
+	</body>
 </html>

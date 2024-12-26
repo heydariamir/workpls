@@ -1,0 +1,354 @@
+:root {
+	--bg-primary: #1a1b1f;
+	--bg-secendary: #212329;
+	--bg-tertiary: #313237;
+	--bg-quaternary: #2d323f;
+	--bg-warning: #ff4757;
+	--bg-warning-dark: #ff2639;
+	--bg-overlay: rgba(49, 50, 55, 0.9);
+	--btn-add: #3482e7;
+	--btn-add-dark: #1866ca;
+	--btn-submit: #1dd1a1;
+	--btn-submit-dark: #17a781;
+	--color-primary: #eaedf6;
+	--color-secendary: #ccc;
+	--color-border: #a26bd3;
+	--color-start: #00ffbb;
+	--color-end: #eb2738;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+li {
+	list-style: none;
+}
+
+textarea {
+	resize: vertical;
+	min-height: 50px;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: var(--bg-primary);
+	color: var(--color-primary);
+}
+
+@keyframes flipbottom {
+	0% {
+		transform: rotate(0deg);
+	}
+	10% {
+		transform: rotate(190deg) translate(-2px, 2px);
+	}
+	20% {
+		transform: rotate(172deg);
+	}
+	25% {
+		transform: rotate(184deg);
+	}
+	30% {
+		transform: rotate(180deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	60% {
+		transform: rotate(370deg) translate(-1px, 1px);
+	}
+	70% {
+		transform: rotate(352deg);
+	}
+	75% {
+		transform: rotate(364deg);
+	}
+	80% {
+		transform: rotate(360deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(49, 50, 55, 0.9);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	text-align: center;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.modal.active {
+	opacity: 1;
+	pointer-events: revert;
+}
+
+.modal.active > .modal__wrapper {
+	scale: 1;
+}
+
+.modal__wrapper {
+	width: calc(100% - 40px);
+	padding: 30px 20px;
+	background-color: var(--bg-secendary);
+	border-radius: 10px;
+	scale: 0;
+	transition: scale 0.5s ease;
+}
+
+.modal__title {
+	margin-bottom: 20px;
+}
+
+.modal__confirm {
+	float: right;
+	margin-top: 25px;
+	background-color: var(--btn-add);
+}
+
+.hourglass {
+	position: relative;
+	top: 0;
+	left: 0;
+	height: 15px;
+	width: 20px;
+	height: 20px;
+}
+
+.hourglass__top,
+.hourglass__bottom {
+	position: absolute;
+	left: 0;
+	width: 0;
+	bottom: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	animation: flipbottom 5s infinite ease-in-out;
+	transform-origin: 50% top;
+}
+
+.hourglass__top {
+	border-bottom: 15px solid var(--color-primary);
+	border-radius: 0.2rem;
+}
+
+.hourglass__bottom {
+	border-bottom: 15px solid var(--btn-submit);
+	animation-delay: 0.8s;
+	border-radius: 0.2rem;
+}
+
+.btn {
+	position: relative;
+	top: 0;
+	left: 0;
+	padding: 15px 20px;
+	border: none;
+	cursor: pointer;
+	color: var(--color-primary);
+	transition: background-color 0.5s ease, top 0.5s ease;
+	border-radius: 10px;
+	font-weight: 700;
+}
+
+.btn:hover {
+	top: 3px;
+}
+
+.text-warning {
+	color: var(--bg-warning-dark);
+}
+
+.section {
+	margin: 20px;
+	border: 1px solid var(--bg-tertiary);
+	padding: 15px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px 1px var(--bg-tertiary);
+}
+
+.box {
+	margin-top: 10px;
+	padding: 20px;
+	background-color: var(--bg-secendary);
+	border-radius: 5px;
+}
+
+.main-header__title {
+	text-align: center;
+	padding: 40px 0 20px 0;
+}
+
+.schedule-list__title {
+	margin-bottom: 10px;
+}
+
+.schedule-list__wrapper {
+	border-radius: 10px;
+}
+
+.schedule-list__wrapper:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+.schedule-list__todos:not(:last-child) {
+	margin-bottom: 5px;
+}
+
+.schedule-list__todo {
+	padding: 13px;
+	background-color: var(--color-border);
+	border-radius: 10px;
+}
+
+.schedule-list__todo:not(:last-child) {
+	margin-bottom: 8px;
+}
+
+.schedule-list__todo-title {
+	margin-bottom: 3px;
+	width: max-content;
+	padding-bottom: 5px;
+	border-bottom: 1px solid var(--color-primary);
+}
+
+.schedule-list__todo-content {
+	display: flex;
+	align-items: flex-end;
+	gap: 15px;
+}
+
+.schedule-list__todo-times {
+	color: var(--color-secendary);
+	font-size: 10px;
+	font-weight: 600;
+}
+
+.schedule-list__todo-date {
+	display: flex;
+	gap: 15px;
+	margin-bottom: 5px;
+}
+
+.schedule-list__todo-date__start {
+	color: var(--color-start);
+}
+
+.schedule-list__todo-date__end {
+	color: var(--color-end);
+}
+
+.schedule-list__todo-time {
+	font-weight: 600;
+}
+
+.schedule-list__todo-time:not(:last-child) {
+	margin-bottom: 5px;
+}
+
+.schedule-create__list {
+	margin-bottom: 10px;
+}
+
+.schedule-create__title {
+	border-bottom: 3px solid var(--color-border);
+	padding-bottom: 15px;
+	margin-bottom: 10px;
+}
+
+.schedule-create__control-wrapper {
+	display: flex;
+	flex-direction: column;
+	border-bottom: 3px solid var(--bg-tertiary);
+	padding-bottom: 10px;
+}
+
+.schedule-create__control-wrapper > * {
+	margin-top: 5px;
+}
+
+.schedule-create__label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.schedule-create__input {
+	padding: 10px 15px;
+	border-radius: 10px;
+	border: none;
+	outline: none;
+	background-color: var(--bg-tertiary);
+	color: var(--color-primary);
+	width: 100%;
+}
+
+.schedule-create__input[type="date"] {
+	padding: 5px;
+}
+
+.schedule-create__date-input-wrapper {
+	display: flex;
+	gap: 10px;
+}
+
+.schedule-create__date-input {
+	margin-top: 5px;
+	flex-basis: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.schedule-create__date-title {
+	margin-bottom: 3px;
+}
+
+.btn--remove {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: static;
+	background-color: var(--bg-warning);
+}
+
+.btn--remove:hover {
+	background-color: var(--bg-warning-dark);
+}
+
+.schedule-create__modify-wrapper {
+	display: flex;
+	gap: 10px;
+}
+
+.schedule-create__modify-wrapper > .btn {
+	flex-basis: 50%;
+}
+
+.btn--add {
+	background-color: var(--btn-add);
+}
+
+.btn--add:hover {
+	background-color: var(--btn-add-dark);
+}
+
+.btn--submit {
+	background-color: var(--btn-submit);
+}
+
+.btn--submit:hover {
+	background-color: var(--btn-submit-dark);
+}
