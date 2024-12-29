@@ -13,6 +13,15 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+
+	/* prevent blue highlighting of elements */
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 ul {
@@ -32,7 +41,7 @@ button {
 
 html,
 body {
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 body {
@@ -53,12 +62,17 @@ body {
 		url("../fonts/Yekan.svg#Yekan") format("svg");
 }
 
-.bold {
-	font-size: 1.4em;
-    line-height: 3;
+.hidden {
+	display: none !important;
 }
 
-.home {
+.bold {
+	font-size: 1.4em;
+	display: inline-block;
+	margin-bottom: 15px;
+}
+
+.top-left-icon {
 	width: 45px;
 	height: 45px;
 	background-color: var(--icon-bg);
@@ -71,14 +85,25 @@ body {
 	left: 20px;
 	line-height: 1;
 	cursor: pointer;
+}
+
+.home-btn {
+	z-index: 10001;
+}
+
+.back-btn {
 	z-index: 10000;
 }
 
-.home-icon {
-	padding: 15px;
+.top-left-icon__link {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.home i {
+.top-left-icon i {
 	font-size: 23px;
 	color: #fff;
 }
@@ -279,13 +304,15 @@ body {
 	border-radius: 10px;
 	padding: 20px;
 	text-align: right;
-	transition: transform 0.3s ease;
+	/*	transition: transform 0.3s ease; */
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/*
 .infobox:hover {
 	transform: translateY(-10px);
 }
+*/
 
 .infobox .icon {
 	font-size: 2rem;
@@ -332,7 +359,7 @@ body {
 	overflow-y: scroll;
 	background-color: var(--book-view-light-bg-1);
 	color: var(--book-view-light-color-1);
-	transition: right .3s ease;
+	transition: right 0.3s ease;
 	z-index: 1001;
 }
 
@@ -344,21 +371,21 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 206px;
+	max-width: 65%;
 	margin: 10px auto 20px auto;
 	height: 45px;
-	padding: 0 .5rem;
+	padding: 0 0.5rem;
 	background-color: red;
 	border-radius: 5px;
 	position: sticky;
-    top: 10px;
-    left: 0;
+	top: 10px;
+	left: 0;
 }
 
 .book-content-title {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 	font-size: 1rem;
 	font-weight: 600;
 }
@@ -368,11 +395,21 @@ body {
 /* list box */
 
 .menu-slide-wrapper {
+	height: 100vh;
 	margin: 0 20px 20px 20px;
+	padding-top: 75px;
+}
+
+.box-wrapper {
+	display: flex;
+}
+
+.box {
+	flex-grow: 1;
+	flex-shrink: 0;
 	border-bottom: 20px solid var(--secondary-color);
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
-	padding-top: 75px;
 }
 
 .box h2 {
@@ -387,7 +424,7 @@ body {
 
 .box ul {
 	background: #fff;
-	height: calc(100vh - 170px);
+	max-height: calc(100vh - 170px);
 	overflow-y: scroll;
 }
 
@@ -443,10 +480,11 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: sticky;
+	position: fixed;
 	top: 10px;
-	left: 0;
+	left: 50%;
 	z-index: 1000;
+	transform: translateX(-50%);
 	margin-bottom: 35px;
 }
 
@@ -469,7 +507,8 @@ body {
 	color: #fff;
 	font-weight: 600;
 	display: flex;
-	align-items: center; /* Gère l'alignement de l'icon */
+	align-items: center; 
+	width: max-content;
 	height: 45px;
 }
 

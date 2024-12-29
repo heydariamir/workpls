@@ -10,31 +10,32 @@ const listElements = document.querySelectorAll(".box ul");
 const bookContentContainer = document.getElementById("book-content-container");
 const bookContentWrapper = document.getElementById("book-content-wrapper");
 const dropdownToggle = document.getElementById("dropdown-button-id");
+const homeListItem = document.querySelector(".list-item__home");
+const infoBoxes = document.querySelectorAll(".infobox-container a");
+const homeBtn = document.querySelector(".home-btn");
+const backBtn = document.querySelector(".back-btn");
+const homeBtnMenu = document.querySelector(".list-item__home");
 
 let readingState = false;
 
-const changeNavFunction = (mode) => {
-	const homeEl = document.querySelector(".home");
-	const homeLinkEl = homeEl.querySelector("a");
-	const homeIcon = homeLinkEl.querySelector("i");
-
-	if (mode === "back") {
-		homeLinkEl.setAttribute("href", "javascript:void(0)");
-		homeIcon.className = "fa-solid fa-chevron-left";
-	} else if (mode === "home") {
-		homeLinkEl.setAttribute("href", "#");
-		homeIcon.className = "fas fa-home";
+const toggleContent = (mode) => {
+	if (mode === "open") {
+		bookContentContainer.classList.add("book-content--open");
+	} else if (mode === "close") {
+		bookContentContainer.classList.remove("book-content--open");
 	}
 };
 
 const readingMode = (mode) => {
 	if (mode) {
-		bookContentContainer.classList.add("book-content--open");
-		changeNavFunction("back");
+		toggleContent("open");
+		homeBtn.style["z-index"] = 10000;
+		backBtn.style["z-index"] = 10001;
 		readingState = true;
 	} else {
-		bookContentContainer.classList.remove("book-content--open");
-		changeNavFunction("home");
+		toggleContent("close");
+		homeBtn.style["z-index"] = 10001;
+		backBtn.style["z-index"] = 10000;
 		readingState = false;
 	}
 };
@@ -48,19 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		items.forEach((item) => {
 			item.addEventListener("click", (event) => {
 				const itemEl = event.target;
-				const itemNumber = +itemEl.getAttribute("data-item-number");
 				dropdownToggle.textContent = itemEl.textContent;
-				switch (itemNumber) {
-					case 1: {
-						break;
-					}
-					case 2: {
-						break;
-					}
-					case 3: {
-						break;
-					}
-				}
 				dropdown.classList.remove("open");
 				dropdownToggle.setAttribute("aria-expanded", "false");
 			});
@@ -119,4 +108,46 @@ const listElementsHandler = (event) => {
 
 listElements.forEach((listElement) => {
 	listElement.addEventListener("click", listElementsHandler);
+});
+
+homeListItem.addEventListener("click", () => {
+	if (readingState) {
+		readingMode(false);
+	}
+});
+
+const dropdownToggleHandler = (opt) => {
+	const infoBoxNumber = opt.infoBoxNumber;
+	const mode = opt.mode;
+
+	if (infoBoxNumber) {
+		const infoBoxIndex = infoBoxNumber - 1;
+		dropdownToggle.textContent = infoBoxes[infoBoxIndex].querySelector("h2").textContent;
+	}
+
+	if (mode === "show") {
+		dropdownToggle.classList.remove("hidden");
+	} else if (mode === "hide") {
+		dropdownToggle.classList.add("hidden");
+	}
+};
+
+infoBoxes.forEach((infoBox) => {
+	const infoBoxNumber = infoBox.getAttribute("data-infobox-number");
+	infoBox.addEventListener(
+		"click",
+		dropdownToggleHandler.bind(this, { mode: "show", infoBoxNumber })
+	);
+});
+
+backBtn.addEventListener("click", () => {
+	readingMode(false);
+});
+
+[homeBtnMenu, homeBtn].forEach((btn) => {
+	console.log(btn);
+	btn.addEventListener(
+		"click",
+		dropdownToggleHandler.bind(this, { mode: "hide" })
+	);
 });
