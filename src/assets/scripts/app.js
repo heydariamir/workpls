@@ -1,9 +1,43 @@
-// fix book content 
-const bookContentElements = document.querySelectorAll(".book-content");
-bookContentElements.forEach(bookContent => {
-    bookContent.innerHTML = bookContent.innerHTML.replaceAll("\t\t\t\t", "");
+import { App } from "@capacitor/app";
+
+App.addListener("backButton", () => {
+	if(readingState) {
+		readingMode(false);
+	}
 })
-//
+
+const listElements = document.querySelectorAll(".box ul");
+const bookContentContainer = document.getElementById("book-content-container");
+const bookContentWrapper = document.getElementById("book-content-wrapper");
+const dropdownToggle = document.getElementById("dropdown-button-id");
+
+let readingState = false;
+
+const changeNavFunction = (mode) => {
+	const homeEl = document.querySelector(".home");
+	const homeLinkEl = homeEl.querySelector("a");
+	const homeIcon = homeLinkEl.querySelector("i");
+
+	if (mode === "back") {
+		homeLinkEl.setAttribute("href", "javascript:void(0)");
+		homeIcon.className = "fa-solid fa-chevron-left";
+	} else if (mode === "home") {
+		homeLinkEl.setAttribute("href", "#");
+		homeIcon.className = "fas fa-home";
+	}
+};
+
+const readingMode = (mode) => {
+	if (mode) {
+		bookContentContainer.classList.add("book-content--open");
+		changeNavFunction("back");
+		readingState = true;
+	} else {
+		bookContentContainer.classList.remove("book-content--open");
+		changeNavFunction("home");
+		readingState = false;
+	}
+};
 
 // dropdown
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,6 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
 						break;
 					}
 				}
+				dropdown.classList.remove("open");
+				dropdownToggle.setAttribute("aria-expanded", "false");
 			});
 		});
 	});
@@ -56,3 +92,31 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 });
 // dropdown
+
+const listElementsHandler = (event) => {
+	const BookContentTitle = document.querySelector(".book-content-title");
+	const listItem = event.target.closest("li");
+	const listItemNumber = listItem.getAttribute("data-content-number");
+
+	const bookContentTemplate = document.querySelector(
+		".book-content-template"
+	);
+	console.log(bookContentTemplate);
+	const bookContentEl = document.importNode(
+		bookContentTemplate.content,
+		true
+	);
+	const currentBookCOntentEl = bookContentEl.querySelector(
+		`#book-content-${listItemNumber}`
+	);
+	BookContentTitle.textContent = currentBookCOntentEl
+		.querySelector(".bold")
+		.textContent.slice(0, -1);
+	bookContentWrapper.innerHTML = "";
+	bookContentWrapper.appendChild(currentBookCOntentEl);
+	readingMode(true);
+};
+
+listElements.forEach((listElement) => {
+	listElement.addEventListener("click", listElementsHandler);
+});

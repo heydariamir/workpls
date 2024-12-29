@@ -5,6 +5,8 @@
 	--box-color: #f1f0e8;
 	--text-color: #211e1e;
 	--icon-bg: #024950;
+	--book-view-light-bg-1: #322f2a;
+	--book-view-light-color-1: #e5dbcf;
 }
 
 * {
@@ -15,6 +17,10 @@
 
 ul {
 	list-style: none;
+}
+
+a {
+	text-decoration: none;
 }
 
 button {
@@ -47,6 +53,11 @@ body {
 		url("../fonts/Yekan.svg#Yekan") format("svg");
 }
 
+.bold {
+	font-size: 1.4em;
+    line-height: 3;
+}
+
 .home {
 	width: 45px;
 	height: 45px;
@@ -61,6 +72,10 @@ body {
 	line-height: 1;
 	cursor: pointer;
 	z-index: 10000;
+}
+
+.home-icon {
+	padding: 15px;
 }
 
 .home i {
@@ -307,17 +322,45 @@ body {
 /* content */
 
 .book-content-container {
-	margin-top: 180px;
+	position: fixed;
+	top: 0;
+	right: -100vw;
 	padding: 0 20px;
+	text-align: justify;
+	width: 100vw;
+	height: 100vh;
+	overflow-y: scroll;
+	background-color: var(--book-view-light-bg-1);
+	color: var(--book-view-light-color-1);
+	transition: right .3s ease;
+	z-index: 1001;
 }
 
-.book-content {
-	font-family: "Yekan", sans-serif;
-	white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;   
+.book-content--open {
+	right: 0;
+}
+
+.book-content-title-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 206px;
+	margin: 10px auto 20px auto;
+	height: 45px;
+	padding: 0 .5rem;
+	background-color: red;
+	border-radius: 5px;
+	position: sticky;
+    top: 10px;
+    left: 0;
+}
+
+.book-content-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+	font-size: 1rem;
+	font-weight: 600;
 }
 
 /* content */
@@ -325,75 +368,47 @@ body {
 /* list box */
 
 .menu-slide-wrapper {
-	position: relative;
-	left: 0;
-	top: 90px;
-	padding-top: 90px;
-	margin-top: 90px;
-	height: calc(100vh - 90px);
-}
-
-.menu-slide {
-	font-size: 0.6em;
-}
-
-.box {
-	margin: 0 20px;
-	border-bottom: 10px solid var(--secondary-color);
+	margin: 0 20px 20px 20px;
+	border-bottom: 20px solid var(--secondary-color);
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
+	padding-top: 75px;
 }
 
 .box h2 {
 	color: #fff;
 	background: var(--secondary-color);
-	font-size: 17px;
+	font-size: 20px;
 	font-weight: 700;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-	padding: 5px 15px;
+	padding: 10px 20px;
 }
 
 .box ul {
-	position: relative;
 	background: #fff;
+	height: calc(100vh - 170px);
+	overflow-y: scroll;
 }
 
 .box ul:hover li {
 	opacity: 0.2;
 }
 
-.menu-slide-wrapper-1 .menu-slide, .menu-slide-wrapper-3 .menu-slide {
-	font-size: .86em !important;
-}
-.menu-slide-wrapper-1 .box h2 , .menu-slide-wrapper-3 .box h2 {
-	font-size: 1.5em !important;
-	padding: 13px;
-}
-
-.menu-slide-wrapper-1 .box {
-	border-bottom-width: 15px;
-}
-
-.menu-slide-wrapper-1 li, .menu-slide-wrapper-3 li {
-	padding: 5px 10px !important;
-}
-
-
 .box ul li {
 	list-style: none;
-	padding: 2.3px 10px;
+	padding: 10px;
 	width: 100%;
 	background: #fff;
 	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-	transition: transform 0.5s;
+	transition: font-size 0.5s;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 }
 
 .box ul li:hover {
-	transform: scale(1.1);
+	font-size: 1.2em;
 	z-index: 5;
 	background: var(--tertiary-color);
 	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
